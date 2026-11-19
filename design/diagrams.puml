@@ -1,0 +1,87 @@
+@startuml Architecture_Diagram
+title Car Temperature Alarm HMI - System Architecture
+
+package "Hardware Layer (UNO Rev3 + LCD Shield)" {
+    [LM35 Temp Sensor] as Sensor
+    [LCD Keypad Ladder] as Buttons
+    [16x2 HD44780 LCD] as LCD_HW
+    [Red Alert LED (PD3)] as LED_HW
+    [Alert Buzzer (PD2)] as Buzzer_HW
+}
+
+package "Bare-Metal C Firmware (code/projectApp)" {
+    component "projectApp.ino\n(Control Loop & Alarm Logic)" as App
+    component "adc.ino / adc.h\n(ADMUX / ADCSRA Driver)" as ADC_Drv
+    component "lcd.ino / lcd.h\n(4-Bit Parallel LCD Driver)" as LCD_Drv
+    component "digital_input_output.ino / .h\n(PORTD GPIO Driver)" as GPIO_Drv
+}
+
+Sensor --> ADC_Drv : Analog Voltage (A1 / ADC1)
+Buttons --> ADC_Drv : Ladder Voltage (A0 / ADC0)
+ADC_Drv --> App : 10-bit ADC Counts
+App --> LCD_Drv : Temp, LL, LH, Status
+App --> GPIO_Drv : Alarm Output State
+LCD_Drv --> LCD_HW : 4-Bit Data & Control
+GPIO_Drv --> LED_HW : PD3 High / Low
+GPIO_Drv --> Buzzer_HW : PD2 High / Low
+@enduml
+
+@startuml Program_Flowchart
+title Main Application Flowchart (projectApp.ino)
+
+start
+:Initialize GPIO (PD2 = Buzzer, PD3 = Red LED);
+:Initialize ADC (AVCC 5V Ref, Prescaler 128);
+:Initialize 16x2 LCD (4-Bit Mode);
+:Set Default Limits (LL, LH);
+
+while (System Powered?) is (Yes)
+    :Read Keypad ADC Channel (A0);
+    if (LL Button Pressed?) then (Yes)
+        :Adjust LL (Enforce LL <= LH);
+        :Short Debounce (20-30 ms);
+    elseif (LH Button Pressed?) then (Yes)
+        :Adjust LH (Enforce LH >= LL);
+        :Short Debounce (20-30 ms);
+    endif
+
+    :Read LM35 ADC Channel (A1);
+    :Convert ADC Count to Celsius (Temp);
+
+    if (Temp >= LL AND Temp <= LH) then (Yes - Within Range)
+        :Status = "OK";
+        :Red LED OFF (PD3 = 0);
+        :Buzzer OFF (PD2 = 0);
+    else (No - Out of Range)
+        :Status = "NOT OKAY";
+        :Red LED ON (PD3 = 1);
+        :Buzzer ON (PD2 = 1);
+    endif
+
+    :Refresh 16x2 LCD (Temp, LL, LH, Status);
+endwhile
+stop
+@enduml
+
+@startuml Alarm_State_Machine
+title Temperature Alarm State Machine
+
+[*] --> INIT : Power On / Reset
+INIT --> NORMAL_OK : Boot Complete\n[LL <= Temp <= LH]
+INIT --> ALARM_ACTIVE : Boot Complete\n[Temp < LL or Temp > LH]
+
+state NORMAL_OK {
+    NORMAL_OK : LCD: Temp & "OK" | LL & LH
+    NORMAL_OK : Red LED (PD3) = OFF
+    NORMAL_OK : Buzzer (PD2) = OFF
+}
+
+state ALARM_ACTIVE {
+    ALARM_ACTIVE : LCD: Temp & "NOT OKAY" | LL & LH
+    ALARM_ACTIVE : Red LED (PD3) = ON
+    ALARM_ACTIVE : Buzzer (PD2) = ON
+}
+
+NORMAL_OK --> ALARM_ACTIVE : Temp > LH or Temp < LL
+ALARM_ACTIVE --> NORMAL_OK : Temp returns inside [LL, LH]\nor Limits adjusted around Temp
+@enduml

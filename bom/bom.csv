@@ -1,0 +1,11 @@
+Item_No,Component_Name,Part_Number_or_Spec,Category,Quantity,Unit_Price_EGP,Total_Price_EGP,Price_Source,Notes
+1,Arduino UNO Rev3 Board,ATmega328P-PU 16 MHz (B50 Clone),Microcontroller Board,1,350.00,350.00,Paid + RAM Electronics Verified (350 EGP vs 450 EGP A65 / 2200 EGP Italy),Matches UNO board shown in demo video; saved 100 EGP vs A65 original-chip model
+2,16x2 LCD Keypad Shield,LCD1602 Blue Backlight + Analog Button Ladder (A0),Display & Input HMI,1,150.00,150.00,Receipt SO-27-53619 (Al Rehab Branch),Matches shield shown in demo video
+3,Analog Temperature Sensor,LM35 (10 mV/C Linear Sensor),Sensor,1,70.00,70.00,Paid Receipt (70 EGP vs 90 EGP second store),Replacement sensor on A1; saved 20 EGP via supplier comparison
+4,Audible Buzzer,5V Active/Piezo Buzzer (D2 / PD2),Audio Alert,1,10.00,10.00,Paid Receipt,Connected to PD2 for audible out-of-range alert
+5,Red Indicator LED,5mm Diffused Red LED (D3 / PD3),Visual Alert,1,8.00,8.00,Paid Receipt (8 EGP vs 10 EGP single / 50 EGP 5-pack),Saved 2 EGP vs single retail price; connected to PD3
+6,Male-to-Female Dupont Jumper Wires,40-Pin 20cm Ribbon Pack (1.50 EGP/wire),Interconnect,1,60.00,60.00,Receipt SO-27-53619 (Al Rehab Branch),Used to connect shield headers to breadboard components
+7,Solderless Breadboard,400-Point Prototyping Breadboard,Prototyping,1,65.00,65.00,Market Estimate (Reused Lab Kit),Mounts LM35 sensor LED resistor and buzzer
+8,Current-Limiting Resistor,330 Ohm 1/4W Carbon Film Resistor,Passive,1,1.00,1.00,Market Estimate (Reused Lab Kit),Series resistor limiting Red LED current on PD3
+,,,,,,,,
+,TOTAL PROTOTYPE BOM COST,,,,,714.00,Verified Receipt + Store Pricing,Exact physical prototype shown in demo video (excludes unrelated 75 EGP relay on receipt)

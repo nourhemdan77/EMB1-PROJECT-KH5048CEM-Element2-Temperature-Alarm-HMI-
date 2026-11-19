@@ -1,0 +1,15 @@
+Item_No,Component_Name,Part_Number_or_Spec,Package,Quantity,Est_Volume_Unit_Price_EGP,Total_Price_EGP,Optimization_Justification
+1,Standalone AVR Microcontroller,ATmega328P-AU (16 MHz),TQFP-32,1,260.00,260.00,Replaces 350 EGP Arduino UNO Rev3 board with bare surface-mount MCU (saves 90 EGP)
+2,Bare 16x2 Character LCD Module,WH1602B-TMI-JT (HD44780),16-Pin Module,1,95.00,95.00,Replaces 150 EGP keypad shield by eliminating shield carrier PCB and 4 unused buttons
+3,SMD Tactile Push Buttons,PTS526 Series (LL & LH Controls),SMD,2,2.50,5.00,Two dedicated buttons for LL and LH instead of full 5-key resistor ladder
+4,Analog Temperature Sensor IC,LM35DM / LM35DZ (Volume Distributor),SOIC-8 / TO-92,1,42.00,42.00,Volume pricing improves further on our 70 EGP retail price (down from 90 EGP)
+5,16 MHz Quartz Crystal + 22pF Caps,HC-49S 16.000MHz + 2x 0805 22pF,SMD,1,8.00,8.00,Provides accurate external clock required by ATmega328P without UNO board
+6,5V LDO Voltage Regulator + Caps,AMS1117-5.0 + 10uF/100nF Decoupling,SOT-223 / 0805,1,12.00,12.00,Steps down 12V vehicle accessory rail to regulated 5V logic supply
+7,Automotive Power Protection,1N4007 Reverse Diode + SMBJ15A TVS,SMA / SMB,1,5.00,5.00,Protects standalone HMI electronics against reverse polarity and voltage spikes
+8,SMD Red LED + 330 Ohm Resistor,0805 Red LED + 0805 330R,0805,1,1.50,1.50,Replaces 8 EGP through-hole LED and discrete axial resistor with automated SMD parts
+9,PCB Piezo Buzzer + NPN Driver,5V SMD Buzzer + MMBT2222A + 1kR,SMD / SOT-23,1,9.00,9.00,Volume buzzer (vs 10 EGP retail) with transistor driver protecting PD2 I/O pin
+10,LCD Contrast Trimmer Potentiometer,10k Ohm 3x3mm SMD Trimpot,SMD,1,3.00,3.00,Replaces onboard shield contrast trimmer potentiometer on custom PCB
+11,6-Pin ISP Programming Pads,2x3 2.54mm Header Footprint,PCB Pads,1,0.00,0.00,Enables factory ISP firmware flashing without permanent USB-UART bridge IC
+12,Custom 2-Layer FR-4 PCB,80mm x 45mm Double-Sided PCB,Custom,1,35.00,35.00,Eliminates 60 EGP jumper wires and 65 EGP breadboard for vibration-safe mounting
+,,,,,,,,
+,TOTAL OPTIMIZED STANDALONE COST,,,,,475.50,ESTIMATE,Reduces unit cost by 238.50 EGP (~33.4%) vs 714.00 EGP prototype

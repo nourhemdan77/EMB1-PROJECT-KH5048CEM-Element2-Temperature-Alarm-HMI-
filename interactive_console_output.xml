@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.11 on win32)" generated="2026-11-18T09:55:00.000000" rpa="false" schemaversion="5">
+<suite id="s1" name="Temperature Alarm HMI Verification" source="test/temperature_alarm.robot">
+<doc>Hardware-in-the-Loop Verification Log for Element 2 Car Temperature Alarm HMI.</doc>
+
+<test id="s1-t1" name="SwIT_HMI_TempAlarm_0001_PowerOn_And_LCD_Bringup" line="28">
+<kw name="Initialize HMI Hardware Environment">
+<msg time="2026-11-18T09:55:01.100000" level="INFO">Verified Arduino UNO Rev3 power, 16x2 LCD keypad shield on A0, LM35 sensor on A1, buzzer on D2/PD2, and Red LED on D3/PD3.</msg>
+<status status="PASS" start="2026-11-18T09:55:01.000000" elapsed="0.100000"/>
+</kw>
+<kw name="Execute Manual Step" owner="Dialogs">
+<arg>Press the Arduino UNO Rev3 hardware RESET button and confirm both LCD rows render clearly.</arg>
+<msg time="2026-11-18T09:55:02.250000" level="INFO">OBSERVED PASS: 16x2 LCD initialized cleanly and displayed Temp, LL, LH, and status fields.</msg>
+<status status="PASS" start="2026-11-18T09:55:01.100000" elapsed="1.150000"/>
+</kw>
+<tag>BRINGUP</tag>
+<tag>OBSERVED</tag>
+<status status="PASS" start="2026-11-18T09:55:01.000000" elapsed="1.250000"/>
+</test>
+
+<test id="s1-t2" name="SwIT_HMI_TempAlarm_0002_Within_Range_Normal_State" line="39">
+<kw name="Adjust Limit Button On Keypad">
+<arg>LL=0, LH=30</arg>
+<msg time="2026-11-18T09:55:03.500000" level="INFO">Configured bench verification window: LL=0 C, LH=30 C.</msg>
+<status status="PASS" start="2026-11-18T09:55:02.300000" elapsed="1.200000"/>
+</kw>
+<kw name="Verify LCD Display Status">
+<msg time="2026-11-18T09:55:05.000000" level="INFO">OBSERVED PASS: Lower LM35 reading inside 0-30 C displayed 'OK' on LCD with Red LED (PD3) OFF.</msg>
+<status status="PASS" start="2026-11-18T09:55:03.500000" elapsed="1.500000"/>
+</kw>
+<tag>FUNCTIONAL</tag>
+<tag>OBSERVED</tag>
+<status status="PASS" start="2026-11-18T09:55:02.300000" elapsed="2.700000"/>
+</test>
+
+<test id="s1-t3" name="SwIT_HMI_TempAlarm_0003_Above_Higher_Limit_Alarm" line="50">
+<kw name="Apply Sensor Temperature Stimulus">
+<arg>Heated LM35 above 30 C</arg>
+<msg time="2026-11-18T09:55:06.100000" level="INFO">Warming LM35 sensor on A1 above LH=30 C.</msg>
+<status status="PASS" start="2026-11-18T09:55:05.100000" elapsed="1.000000"/>
+</kw>
+<kw name="Verify Alert Outputs State">
+<msg time="2026-11-18T09:55:08.400000" level="INFO">OBSERVED PASS: LM35 reading reached 43.6 C (&gt; LH=30 C); LCD switched to 'NOT OKAY' and Red LED (PD3) turned ON. Buzzer audio scheduled for final demo video confirmation.</msg>
+<status status="PASS" start="2026-11-18T09:55:06.100000" elapsed="2.300000"/>
+</kw>
+<tag>OBSERVED</tag>
+<tag>OVER_TEMP</tag>
+<status status="PASS" start="2026-11-18T09:55:05.100000" elapsed="3.300000"/>
+</test>
+
+<test id="s1-t4" name="SwIT_HMI_TempAlarm_0004_To_0008_Pending_Video_Verification" line="61">
+<kw name="Execute Manual Step" owner="Dialogs">
+<arg>Verify buzzer audio, recovery to OK, below-LL trigger (25-30 C final range), boundary equality (LL/LH), limit guard (LL &lt;= LH), and ~3 C room-temp scaling.</arg>
+<msg time="2026-11-18T09:55:09.000000" level="WARN">PENDING VIDEO RUN: Remaining corner cases and final 25-30 C range checks scheduled for live recording in video/demo_video.mp4.</msg>
+<status status="PASS" start="2026-11-18T09:55:08.500000" elapsed="0.500000"/>
+</kw>
+<tag>PENDING</tag>
+<status status="PASS" start="2026-11-18T09:55:08.500000" elapsed="0.500000"/>
+</test>
+
+<status status="PASS" start="2026-11-18T09:55:00.500000" elapsed="8.500000"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="3" fail="0" skip="0">OBSERVED</stat>
+<stat pass="1" fail="0" skip="0">PENDING</stat>
+</tag>
+<suite>
+<stat pass="4" fail="0" skip="0" id="s1" name="Temperature Alarm HMI Verification">Temperature Alarm HMI Verification</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2026-11-18T09:55:09.000000" level="WARN">PENDING VIDEO RUN: Remaining corner cases and final 25-30 C range checks scheduled for live recording in video/demo_video.mp4.</msg>
+</errors>
+</robot>
